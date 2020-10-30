@@ -81,7 +81,7 @@ Queries.get("/dataAll_location/:search",(req,res) => {
     })
 });
 
-
+// 5 current location data
 Queries.get("/current_location/:search", (req, res) => {
     var search = req.params.search
     QueriesDB.get_search(search)
