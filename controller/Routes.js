@@ -2,6 +2,8 @@ const { LOADIPHLPAPI } = require("dns");
 const express = require("express");
 const Queries = express();
 const QueriesDB = require("../model/Queries")
+const unirest = require("unirest");
+
 
 // API user
 // 1 create new user
@@ -78,5 +80,40 @@ Queries.get("/dataAll_location/:search",(req,res) => {
         res.send(err)
     })
 });
+
+
+Queries.get("/current_location/:search", (req, res) => {
+    var search = req.params.search
+    QueriesDB.get_search(search)
+    .then((Date) => {
+        var Location_of_image = Date[0]["Location_of_image"]
+        if(Location_of_image == 'Null'){
+            var apiCall = unirest("GET",
+
+                "https://ip-geolocation-ipwhois-io.p.rapidapi.com/json/"
+
+            );
+
+            apiCall.headers({
+
+                "x-rapidapi-host": "ip-geolocation-ipwhois-io.p.rapidapi.com",
+
+                "x-rapidapi-key": "srclZqaa9imshAk9Xzz55u27oltLp1SqdiFjsnmva9PTpf2j3f"
+
+            });
+
+            apiCall.end(function(result) {
+
+                if (res.error) throw new Error(result.error);
+
+                console.log(result.body);
+
+                res.send(result.body);
+
+            });
+        }
+    })
+});
+
 
 module.exports = Queries

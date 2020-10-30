@@ -22,12 +22,20 @@ let dataAll_list = () => {
     .join('details_Image','user.ID','=','details_Image.ID')
 };
 
-// 4 4 showing the location of place wherever the image
+// 4 showing the location of place wherever the image
 let get_search = (search) => {
     return knex("user")
     .join('details_Image','user.ID','=','details_Image.ID')
     .select('details_Image.Name_of_Image', 'Height_of_image','width_of_image','Size_of_image','Extension_of_image','person_uploads','Location_of_image','user.Image')
     .where('Name_of_Image','like',  '%' +search+ '%')
 };
+
+// 5
+// let currentlocation_search = (search) => {
+//     return knex("user")
+//     .join('details_Image','user.ID','=','details_Image.ID')
+//     .select('details_Image.Location_of_image')
+//     .where('Name_of_Image','like',  '%' +search+ '%')
+// };
 
 module.exports = {sign_in,dataid,postdetails,dataAll_list,get_search}
